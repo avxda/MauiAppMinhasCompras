@@ -9,12 +9,22 @@ namespace MauiAppMinhasCompras.Models
 {
     public class Produto
     {
+        string _description;
+
         [PrimaryKey, AutoIncrement]
         public int Id { get; set; }
-        public string Nome { get; set; }
-        public string Descricao { get; set; }
-        public decimal Preco { get; set; }
-        public int Quantidade { get; set; }
-        public double Total { get => Quantidade * (double)Preco; }
+        public string Name { get; set; }
+        public string Description {
+            get => _description;
+            set { if (value == null)
+                {
+                    throw new Exception("Description cannot be null");
+                }
+             }
+
+        }
+        public decimal Price { get; set; }
+        public int Quantity { get; set; }
+        public double Total { get => Quantity * (double)Price; }
     }
 }

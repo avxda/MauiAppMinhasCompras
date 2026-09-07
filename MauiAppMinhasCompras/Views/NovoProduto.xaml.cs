@@ -14,11 +14,14 @@ public partial class NovoProduto : ContentPage
     {
 		try
 		{
-			Produto p = new Produto
+			Produto produto_anexado = BindingContext as Produto;
+            Produto p = new Produto
 			{
-				Descricao = txt_desc.Text,
-                Quantidade = (int)Convert.ToDouble(txt_qtd.Text),
-				Preco = (int)Convert.ToDouble(txt_preco.Text)
+				Id = produto_anexado?.Id ?? 0,
+                Name = txt_nome.Text,
+                Description = txt_desc.Text,
+                Quantity = (int)Convert.ToDouble(txt_qtd.Text),
+				Price = (int)Convert.ToDouble(txt_preco.Text)
             };
 			await App.Db.Insert(p);
 			await DisplayAlert("Sucesso", "Produto cadastrado com sucesso!", "OK");
