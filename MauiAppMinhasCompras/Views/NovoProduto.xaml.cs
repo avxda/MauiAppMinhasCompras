@@ -21,14 +21,15 @@ public partial class NovoProduto : ContentPage
                 Name = txt_nome.Text,
                 Description = txt_desc.Text,
                 Quantity = (int)Convert.ToDouble(txt_qtd.Text),
-				Price = (int)Convert.ToDouble(txt_preco.Text)
+                DataCadastro = DataCadastro.Date,
+                Price = (int)Convert.ToDouble(txt_preco.Text)
             };
 			await App.Db.Insert(p);
 			await DisplayAlert("Sucesso", "Produto cadastrado com sucesso!", "OK");
-
+			await Navigation.PopAsync();
         } catch (Exception ex)
 		{
-			await DisplayActionSheet("Erro", "OK", null, ex.Message);
+			await DisplayAlert("Erro", ex.Message, "OK");
         }
     }
 }

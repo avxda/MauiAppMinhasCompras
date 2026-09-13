@@ -21,7 +21,8 @@ public partial class EditarProduto : ContentPage
                     Name = txt_nome.Text,
                     Description = txt_desc.Text,
                     Quantity = (int)Convert.ToDouble(txt_qtd.Text),
-                    Price = (int)Convert.ToDouble(txt_preco.Text)
+                    Price = (int)Convert.ToDouble(txt_preco.Text),
+                    DataCadastro = DataCadastro.Date
                 };
                 await App.Db.Update(p);
                 await DisplayAlert("Sucesso", "Produto atualizado com sucesso!", "OK");

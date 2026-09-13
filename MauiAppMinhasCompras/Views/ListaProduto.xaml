@@ -6,39 +6,57 @@
     <ContentPage.ToolbarItems>
         <ToolbarItem Text="Sum" Clicked="ToolbarItem_Clicked_Soma" />
         <ToolbarItem Text="Add" Clicked="ToolbarItem_Clicked" />
+        <ToolbarItem Text="Report" Clicked="ToolbarItem_Clicked_Relatorio" />
     </ContentPage.ToolbarItems>
-    <VerticalStackLayout>
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <Style TargetType="Label">
+                <Setter Property="VerticalTextAlignment" Value="Center" />
+            </Style>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <StackLayout>
         <SearchBar x:Name="txt_search"
                    Placeholder="Search Products"
                    TextChanged="txt_search_TextChanged" />
-        <ListView x:Name="list_produtos" ItemSelected="list_produtos_ItemSelected">
-            <ListView.Header>
-                <Grid ColumnDefinitions="*,*,*,*,*,*">
-                    <Label Grid.Column="0" Text="Name"/>
-                    <Label Grid.Column="1" Text="ID" />
-                    <Label Grid.Column="2" Text="Description" />
-                    <Label Grid.Column="3" Text="Price" />
-                    <Label Grid.Column="4" Text="Quantity" />
-                    <Label Grid.Column="5" Text="Total" />
-                </Grid>
-            </ListView.Header>
-            <ListView.ItemTemplate>
-                <DataTemplate>
-                    <ViewCell>
-                        <ViewCell.ContextActions>
-                            <MenuItem Text="Delete" Clicked="MenuItem_Clicked" />
-                        </ViewCell.ContextActions>
-                        <Grid ColumnDefinitions="*,*,*,*,*,*">
-                            <Label Grid.Column="0" Text="{Binding Name}"/>
-                            <Label Grid.Column="1" Text="{Binding Id}" />
-                            <Label Grid.Column="2" Text="{Binding Description}" />
-                            <Label Grid.Column="3" Text="{Binding Price}" />
-                            <Label Grid.Column="4" Text="{Binding Quantity}" />
-                            <Label Grid.Column="5" Text="{Binding Total}" />
-                        </Grid>
-                    </ViewCell>
-                </DataTemplate>
-            </ListView.ItemTemplate>
-        </ListView>
-    </VerticalStackLayout>
+        <Frame Padding="0" Margin="10" VerticalOptions="FillAndExpand">
+            <ListView x:Name="list_produtos" ItemSelected="list_produtos_ItemSelected"
+                    IsPullToRefreshEnabled="True"
+                    Refreshing="list_produtos_Refreshing">
+                <ListView.Header>
+                    <Grid ColumnDefinitions="*,*,*,*,*,*,*" BackgroundColor="DodgerBlue">
+                        <Label Grid.Column="0" Text="Name" FontAttributes="Bold" HorizontalOptions="Center"/>
+                        <Label Grid.Column="1" Text="ID" FontAttributes="Bold"/>
+                        <Label Grid.Column="2" Text="Description" FontAttributes="Bold"/>
+                        <Label Grid.Column="3" Text="Price" FontAttributes="Bold"/>
+                        <Label Grid.Column="4" Text="Quantity" FontAttributes="Bold"/>
+                        <Label Grid.Column="5" Text="Date" FontAttributes="Bold"/>
+                        <Label Grid.Column="6" Text="Total" FontAttributes="Bold"/>
+
+                    </Grid>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <ViewCell.ContextActions>
+                                <MenuItem Text="Delete" Clicked="MenuItem_Clicked" />
+                            </ViewCell.ContextActions>
+                            <Grid ColumnDefinitions="*,*,*,*,*,*,*">
+                                <Label Grid.Column="0" Text="{Binding Name}" HorizontalOptions="Center"/>
+                                <Label Grid.Column="1" Text="{Binding Id}" />
+                                <Label Grid.Column="2" Text="{Binding Description}" />
+                                <Label Grid.Column="3" Text="{Binding Price, StringFormat='{}{0:C}'}" />
+                                <Label Grid.Column="4" Text="{Binding Quantity}" />
+                                <Label Grid.Column="5" Text="{Binding DataCadastro, StringFormat='{}{0:MM/dd/yyyy}'}" />
+                                <Label Grid.Column="6" Text="{Binding Total, StringFormat='{}{0:C}'}" />
+
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+            </ListView>
+        </Frame>
+    </StackLayout>
 </ContentPage>

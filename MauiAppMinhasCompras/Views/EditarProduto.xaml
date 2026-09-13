@@ -17,5 +17,7 @@
         <Entry x:Name="txt_qtd" Keyboard="Numeric" Text="{Binding Quantity}"/>
         <Label Text="Price"/>
         <Entry x:Name="txt_preco" Keyboard="Numeric" Text="{Binding Price}"/>
+        <Label Text="Date"/>
+        <DatePicker x:Name="DataCadastro"/>
     </VerticalStackLayout>
 </ContentPage>

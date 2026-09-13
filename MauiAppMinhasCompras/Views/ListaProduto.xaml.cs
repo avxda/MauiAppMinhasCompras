@@ -2,6 +2,7 @@ using MauiAppMinhasCompras.Models;
 using System.Collections.ObjectModel;
 using MauiAppMinhasCompras.Views;
 
+
 namespace MauiAppMinhasCompras.Views;
 
 public partial class ListaProduto : ContentPage
@@ -12,6 +13,7 @@ public partial class ListaProduto : ContentPage
         InitializeComponent();
         list_produtos.ItemsSource = Lista;
     }
+
     protected async override void OnAppearing()
     {
         try
@@ -45,14 +47,20 @@ public partial class ListaProduto : ContentPage
         try
         {
         string q = e.NewTextValue;
-        Lista.Clear();
+            list_produtos.IsRefreshing = true;
+            Lista.Clear();
         List<Produto> tmp = await App.Db.Search(q);
         tmp.ForEach(x => Lista.Add(x));
     } catch (Exception ex)
         {
             DisplayAlert("Erro", ex.Message, "OK");
         }
+        finally
+        {
+            list_produtos.IsRefreshing = false;
+        }
     }
+
 
     private void ToolbarItem_Clicked_Soma(object sender, EventArgs e)
     {
@@ -97,5 +105,29 @@ public partial class ListaProduto : ContentPage
         {
             DisplayAlert("Erro", ex.Message, "OK");
         }
+    }
+    private async void list_produtos_Refreshing(object sender, EventArgs e)
+    {
+        {
+            try
+            {
+                Lista.Clear();
+                List<Produto> tmp = await App.Db.GetAll();
+                tmp.ForEach(x => Lista.Add(x));
+            }
+            catch (Exception ex)
+            {
+                DisplayAlert("Erro", ex.Message, "OK");
+            }
+            finally
+            {
+                list_produtos.IsRefreshing = false;
+            }
+        }
+    }
+
+    private async void ToolbarItem_Clicked_Relatorio(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new Views.Relatório());
     }
 }
